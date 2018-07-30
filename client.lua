@@ -51,6 +51,12 @@ Citizen.CreateThread(function()
             if createdCamera ~= 0 then
                 local instructions = CreateInstuctionScaleform("instructional_buttons")
                 DrawScaleformMovieFullscreen(instructions, 255, 255, 255, 255, 0)
+                SetTimecycleModifier("scanline_cam_cheap")
+                SetTimecycleModifierStrength(3.0)
+
+                if SecurityCamConfig.HideRadar then
+                    DisplayRadar(false)
+                end
 
                 -- CLOSE CAMERAS
                 if IsControlJustPressed(1, 194) then
@@ -130,6 +136,7 @@ function CloseSecurityCamera()
     DestroyCam(createdCamera, 0)
     RenderScriptCams(0, 0, 1, 1, 1)
     createdCamera = 0
+    ClearTimecycleModifier("scanline_cam_cheap")
 end
 
 function Draw3DText(x, y, z, text)

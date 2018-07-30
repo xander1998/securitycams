@@ -1,6 +1,7 @@
 SecurityCamConfig = {}
 
 SecurityCamConfig.DebugMode = false
+SecurityCamConfig.HideRadar = true
 
 SecurityCamConfig.Locations = {
     {
