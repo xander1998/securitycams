@@ -19,6 +19,6 @@ SecurityCamConfig.Locations = {
             {label = "Camera 10", x = 269.89, y = 223.76, z = 106.48, r = {x = -35.0, y = 0.0, z = 112.62}},
             {label = "Camera 11", x = 252.27, y = 225.52, z = 103.99, r = {x = -35.0, y = 0.0, z = -74.87}}
         },
-        allowedModels = {"s_m_y_cop_01", "s_m_y_hwaycop_01"}
+        allowedModels = {}
     }
 }

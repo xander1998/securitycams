@@ -36,6 +36,7 @@ Citizen.CreateThread(function()
                         local firstCamy = SecurityCamConfig.Locations[a].cameras[1].y
                         local firstCamz = SecurityCamConfig.Locations[a].cameras[1].z
                         local firstCamr = SecurityCamConfig.Locations[a].cameras[1].r
+                        SetFocusArea(firstCamx, firstCamy, firstCamz, firstCamx, firstCamy, firstCamz)
                         ChangeSecurityCamera(firstCamx, firstCamy, firstCamz, firstCamr)
                         SendNUIMessage({
                             type = "enablecam",
@@ -52,7 +53,7 @@ Citizen.CreateThread(function()
                 local instructions = CreateInstuctionScaleform("instructional_buttons")
                 DrawScaleformMovieFullscreen(instructions, 255, 255, 255, 255, 0)
                 SetTimecycleModifier("scanline_cam_cheap")
-                SetTimecycleModifierStrength(3.0)
+                SetTimecycleModifierStrength(2.0)
 
                 if SecurityCamConfig.HideRadar then
                     DisplayRadar(false)
@@ -80,6 +81,7 @@ Citizen.CreateThread(function()
                     local newCamy = SecurityCamConfig.Locations[currentCameraIndex].cameras[newCamIndex].y
                     local newCamz = SecurityCamConfig.Locations[currentCameraIndex].cameras[newCamIndex].z
                     local newCamr = SecurityCamConfig.Locations[currentCameraIndex].cameras[newCamIndex].r
+                    SetFocusArea(newCamx, newCamy, newCamz, newCamx, newCamy, newCamz)
                     SendNUIMessage({
                         type = "updatecam",
                         label = SecurityCamConfig.Locations[currentCameraIndex].cameras[newCamIndex].label
@@ -102,6 +104,7 @@ Citizen.CreateThread(function()
                     local newCamy = SecurityCamConfig.Locations[currentCameraIndex].cameras[newCamIndex].y
                     local newCamz = SecurityCamConfig.Locations[currentCameraIndex].cameras[newCamIndex].z
                     local newCamr = SecurityCamConfig.Locations[currentCameraIndex].cameras[newCamIndex].r
+                    SetFocusArea(newCamx, newCamy, newCamz, newCamx, newCamy, newCamz)
                     SendNUIMessage({
                         type = "updatecam",
                         label = SecurityCamConfig.Locations[currentCameraIndex].cameras[newCamIndex].label
@@ -137,6 +140,7 @@ function CloseSecurityCamera()
     RenderScriptCams(0, 0, 1, 1, 1)
     createdCamera = 0
     ClearTimecycleModifier("scanline_cam_cheap")
+    SetFocusEntity(GetPlayerPed(PlayerId()))
 end
 
 function Draw3DText(x, y, z, text)
@@ -146,7 +150,6 @@ function Draw3DText(x, y, z, text)
     local scale = (1 / distance) * 2
     local fov = (1 / GetGameplayCamFov()) * 100
     local scale = scale * fov
-
     if onScreen then
         SetTextScale(0.0*scale, 0.35*scale)
         SetTextFont(0)
