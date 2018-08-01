@@ -65,6 +65,9 @@ Citizen.CreateThread(function()
                     SendNUIMessage({
                         type = "disablecam",
                     })
+			if SecurityCamConfig.HideRadar then
+                    	   DisplayRadar(true)
+                	end
                 end
 
                 -- GO BACK CAMERA
