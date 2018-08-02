@@ -18,6 +18,12 @@ SecurityCamConfig.Locations = {
             {label = "Bank Camera 9", x = 254.72, y = 206.06, z = 113.28, r = {x = -35.0, y = 0.0, z = 44.70}},
             {label = "Bank Camera 10", x = 269.89, y = 223.76, z = 106.48, r = {x = -35.0, y = 0.0, z = 112.62}},
             {label = "Bank Camera 11", x = 252.27, y = 225.52, z = 103.99, r = {x = -35.0, y = 0.0, z = -74.87}}
+        },
+        allowedModels = {}
+    },
+    {
+        camBox = {label = "Los Santos Police Department", x = 283.67, y = 264.41, z = 105.80},
+        cameras = {
             {label = "Police Camera 1", x = 416.744, y = -1009.270, z = 34.08, r = {x = -25.0, y = 0.0, z = 28.05}},
             {label = "Police Camera 2", x = 465.151, y = -994.266, z = 27.23, r = {x = -30.0, y = 0.0, z = 100.29}},
             {label = "Police Camera 3", x = 465.631, y = -997.777, z = 27.48, r = {x = -35.0, y = 0.0, z = 90.46}},
