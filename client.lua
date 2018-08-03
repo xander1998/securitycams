@@ -34,6 +34,7 @@ Citizen.CreateThread(function()
                     Draw3DText(box_x, box_y, box_z, tostring("~o~[E]~w~ Use " .. box_label .. " Cameras"))
                     if IsControlJustPressed(1, 38) and createdCamera == 0 and distance <= 1.2 then
 			blockbuttons = true
+			TriggerEvent('securitycams:freeze', true)
                         local firstCamx = SecurityCamConfig.Locations[a].cameras[1].x
                         local firstCamy = SecurityCamConfig.Locations[a].cameras[1].y
                         local firstCamz = SecurityCamConfig.Locations[a].cameras[1].z
@@ -71,6 +72,7 @@ Citizen.CreateThread(function()
                     	   DisplayRadar(true)
                 	end
 			blockbuttons = false
+			TriggerEvent('securitycams:freeze', false)
                 end
 
                 -- GO BACK CAMERA
@@ -234,8 +236,8 @@ function InstructionButtonMessage(text)
     EndTextCommandScaleformString()
 end
 
-RegisterNetEvent('esx_securitycam:freeze')
-AddEventHandler('esx_securitycam:freeze', function(freeze)
+RegisterNetEvent('securitycams:freeze')
+AddEventHandler('securitycams:freeze', function(freeze)
 	FreezeEntityPosition(GetPlayerPed(-1), freeze)
 end)
 
