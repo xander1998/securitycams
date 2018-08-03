@@ -3,6 +3,7 @@ local currentCameraIndex = 0
 local currentCameraIndexIndex = 0
 local createdCamera = 0
 local screenEffect = "Seven_Eleven"
+local blockbuttons = false
 
 Citizen.CreateThread(function()
     while true do
@@ -32,6 +33,7 @@ Citizen.CreateThread(function()
                     local box_z = SecurityCamConfig.Locations[a].camBox.z
                     Draw3DText(box_x, box_y, box_z, tostring("~o~[E]~w~ Use " .. box_label .. " Cameras"))
                     if IsControlJustPressed(1, 38) and createdCamera == 0 and distance <= 1.2 then
+			blockbuttons = true
                         local firstCamx = SecurityCamConfig.Locations[a].cameras[1].x
                         local firstCamy = SecurityCamConfig.Locations[a].cameras[1].y
                         local firstCamz = SecurityCamConfig.Locations[a].cameras[1].z
@@ -68,6 +70,7 @@ Citizen.CreateThread(function()
 			if SecurityCamConfig.HideRadar then
                     	   DisplayRadar(true)
                 	end
+			blockbuttons = false
                 end
 
                 -- GO BACK CAMERA
@@ -230,3 +233,27 @@ function InstructionButtonMessage(text)
     AddTextComponentScaleform(text)
     EndTextCommandScaleformString()
 end
+
+RegisterNetEvent('esx_securitycam:freeze')
+AddEventHandler('esx_securitycam:freeze', function(freeze)
+	FreezeEntityPosition(GetPlayerPed(-1), freeze)
+end)
+
+Citizen.CreateThread(function()
+	while true do
+		Citizen.Wait(10)
+		if blockbuttons then
+			DisableControlAction(2, 24, true)
+			DisableControlAction(2, 257, true)
+			DisableControlAction(2, 25, true)
+			DisableControlAction(2, 263, true)
+			DisableControlAction(2, Keys['R'], true)
+			DisableControlAction(2, Keys['SPACE'], true)
+			DisableControlAction(2, Keys['Q'], true)
+			DisableControlAction(2, Keys['TAB'], true)
+			DisableControlAction(2, Keys['F'], true)
+		else
+			Citizen.Wait(1000)
+		end
+	end
+end)
