@@ -2,7 +2,6 @@ local cameraActive = false
 local currentCameraIndex = 0
 local currentCameraIndexIndex = 0
 local createdCamera = 0
-local screenEffect = "Seven_Eleven"
 
 Citizen.CreateThread(function()
     while true do
@@ -45,6 +44,7 @@ Citizen.CreateThread(function()
                         })
                         currentCameraIndex = a
                         currentCameraIndexIndex = 1
+                        FreezeEntityPosition(GetPlayerPed(PlayerId()), true)
                     end
                 end
             end
@@ -112,6 +112,37 @@ Citizen.CreateThread(function()
                     ChangeSecurityCamera(newCamx, newCamy, newCamz, newCamr)
                     currentCameraIndexIndex = newCamIndex
                 end
+
+                ---------------------------------------------------------------------------
+                -- CAMERA ROTATION CONTROLS
+                ---------------------------------------------------------------------------
+                if SecurityCamConfig.Locations[currentCameraIndex].cameras[currentCameraIndexIndex].canRotate then
+                    local getCameraRot = GetCamRot(createdCamera, 2)
+
+                    -- ROTATE UP
+                    if IsControlPressed(1, 32) then
+                        if getCameraRot.x <= 0.0 then
+                            SetCamRot(createdCamera, getCameraRot.x + 0.7, 0.0, getCameraRot.z, 2)
+                        end
+                    end
+
+                    -- ROTATE DOWN
+                    if IsControlPressed(1, 33) then
+                        if getCameraRot.x >= -50.0 then
+                            SetCamRot(createdCamera, getCameraRot.x - 0.7, 0.0, getCameraRot.z, 2)
+                        end
+                    end
+
+                    -- ROTATE LEFT
+                    if IsControlPressed(1, 34) then
+                        SetCamRot(createdCamera, getCameraRot.x, 0.0, getCameraRot.z + 0.7, 2)
+                    end
+
+                    -- ROTATE RIGHT
+                    if IsControlPressed(1, 35) then
+                        SetCamRot(createdCamera, getCameraRot.x, 0.0, getCameraRot.z - 0.7, 2)
+                    end
+                end
             end
         end
         Citizen.Wait(0)
@@ -141,6 +172,10 @@ function CloseSecurityCamera()
     createdCamera = 0
     ClearTimecycleModifier("scanline_cam_cheap")
     SetFocusEntity(GetPlayerPed(PlayerId()))
+    if SecurityCamConfig.HideRadar then
+        DisplayRadar(true)
+    end
+    FreezeEntityPosition(GetPlayerPed(PlayerId()), false)
 end
 
 function Draw3DText(x, y, z, text)
